@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+      
+        #rect {
+            position: relative;
+            width: 1000px;
+            height: 900px;
+            background-color: #85fff7;
+            overflow: hidden;
+        }
+        .ball {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid #555;
+        }
+  
+  </style>
+</head>
+  <body>
+      <div id="rect">
+          
+      </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+    
+    var rect=$("#rect");
+    var b,i,x,y,size,color;
+
+    var randomRGB = function() {
+        let n = parseInt(Math.random()*16777216); // 256*256*256
+        n = n.toString(16);
+        let c = '#' + '000000'.slice(n.length) + n;
+        // console.log(c);
+        return c;
+    };
+
+   for(i=0 ; i<200 ; i++){
+    b=$("<div class=ball></div>");
+    x=parseInt(1000*Math.random());
+    y=-50+parseInt(900*Math.random());
+    size=10+parseInt(21*Math.random());
+    // color="hsl("+parseInt(360*Math.random())+",100%,50%)";
+    // color="rgb("+parseInt(256*Math.random())+","+parseInt(256*Math.random())+","+parseInt(256*Math.random())+")";
+    color=randomRGB;
+    b.css({
+      top:y,
+      left:x,
+      width:size,
+      height:size,
+      backgroundColor:color,
+    })
+    rect.append(b)
+   }
+  
+   balls = $('.ball');
+
+function run() {
+    balls.each(function(){
+        $(this).css('left', '+=' + (parseInt(Math.random()*5)-2));
+        $(this).css('top', '-=' + parseInt(Math.random()*5));
+        if($(this).position().top < -50 ){
+          $(this).css('top', '+=900') 
+        }
+    });
+
+    setTimeout(run, 30);
+}
+
+run();
+    
+    </script>
+</body>
+</html>
