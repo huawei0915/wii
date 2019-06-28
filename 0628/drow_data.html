@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+    #rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #85fff7;
+        }
+        .ball {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: red;
+            border: 1px solid black;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+    </style>
+</head>
+  <body>
+      <div id="rect"></div>
+        <button type="button" class="btn btn-primary" id="btn">清除</button>
+        <button>get data</button>
+        <br>
+        <textarea id="info" cols="50" rows="30"></textarea>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+    var rect=$("#rect");
+    var data = [];
+    // var randomRGB = function() {
+    //     let n = parseInt(Math.random()*16777216); // 256*256*256
+    //     n = n.toString(16);
+    //     let c = '#' + '000000'.slice(n.length) + n;
+    //     console.log(c);
+    //     return c;
+    // };
+
+        function mDown(e){
+            $(window).on('mouseup', mUp);
+            rect.on('mousemove', mMove);
+        };
+        function mUp(e){
+            $(window).off('mouseup', mUp);
+            rect.off('mousemove', mMove);
+        };
+
+    function mMove(e){
+        b=$("<div class='ball' />");
+        size = 5 + parseInt(11*Math.random());
+        color="hsl("+parseInt(360*Math.random())+",100%,50%)";
+
+        b.css({
+            left: event.offsetX-size/2,
+            top: event.offsetY-size/2,
+            width: size,
+            height: size,
+            backgroundColor: color
+        });
+        data.push({
+            x: event.offsetX-size/2,
+            y: event.offsetY-size/2,
+            s: size,
+            c: color
+        });
+        rect.append(b);
+    }    
+
+    $("#btn").click(function(){
+        rect.empty();
+        $("#info").empty();
+    });
+    rect.on('mousedown', mDown);
+    $('button').click(function(){
+       $('#info').val( JSON.stringify(data) );
+
+
+    });
+
+    
+    
+    </script>
+</body>
+</html>

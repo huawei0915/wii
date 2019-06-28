@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        #rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #85fff7;
+        }
+        .ball {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: red;
+            border: 1px solid black;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+    </style>  
+</head>
+  <body>
+      
+<div id="rect">
+</div>
+<button>show</button>
+<br>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+    var rect = $('#rect');
+    var b;
+    var myData;
+    var drawIndex = 0;
+
+    function drawBall(obj){
+        b = $('<div class="ball"></div>');
+
+        b.css({
+            left: obj.x,
+            top: obj.y,
+            width: obj.s,
+            height: obj.s,
+            backgroundColor: obj.c
+        });
+
+        rect.append(b);
+    }
+
+
+
+    $('button').click(function(){
+        $.get("abc.json", function(data){
+            console.log(data);
+            myData = data;
+            run();
+        }, 'json');
+    });
+
+
+    function run(){
+        var obj = myData[drawIndex];
+        drawBall(obj);
+
+        drawIndex++;
+
+        if(drawIndex < myData.length){
+            setTimeout(run, 10);
+        }
+    }
+</script>
+</body>
+</html>
