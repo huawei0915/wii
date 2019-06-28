@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        #rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #85fff7;
+        }
+
+        .ball {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: red;
+            color: white;
+            line-height: 60px;
+            text-align: center;
+            top: 0;
+            left: 0;
+            border: 1px solid black;
+        }
+
+        .big-ball {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #613fff;
+            color: white;
+            line-height: 80px;
+            text-align: center;
+            left: 360px;
+            top: 260px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="rect">
+        <div class="big-ball"></div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+
+        var rect = $('#rect');
+        var bigBall = $('.big-ball');
+        var i, b, balls;
+        var isopen = false;
+        var ballNum = 12;
+        var unitAng = Math.PI * 2 / ballNum;
+
+        for (i = 0; i < ballNum; i++) {
+            b = $('<div class="ball"></div>'); // 建立 element
+            b.attr('data-bx', 370);
+            b.attr('data-by', 270);
+            b.attr('data-ex', 370 + Math.cos(i * unitAng) * 200);
+            b.attr('data-ey', 270 + Math.sin(i * unitAng) * 200);
+
+            b.css({
+                left: 400 - 30,
+                top: 300 - 30
+            });
+            b.html(i + 1);
+
+            rect.append(b);
+            rect.append(bigBall);
+            // b.delay(i*200).animate({
+            //     left: 400-30 + Math.cos(i*unitAng-Math.PI/3)*200,
+            //     top: 300-30 + Math.sin(i*unitAng-Math.PI/3)*200
+            // },800,'easeOutBounce');
+
+        }
+
+        rect.click(function (ev) {
+            var t = $(ev.target);
+            if (t.hasClass("ball")) {
+                alert(t.text());
+            }
+        })
+
+
+        balls = $('.ball');
+        bigBall.click(function () {
+            var x, y;
+            isopen = !isopen;
+            balls.each(function (index, el) {
+
+                if (isopen) {
+                    x = $(this).attr('data-ex');
+                    y = $(this).attr('data-ey');
+                } else {
+                    x = $(this).attr('data-bx');
+                    y = $(this).attr('data-by');
+                }
+
+
+
+                $(el).delay(index * 100).animate({
+                    left: x,
+                    top: y
+                    // left: 400-30 + Math.cos(index*unitAng)*200,
+                    // top: 300-30 + Math.sin(index*unitAng)*200
+                }, 200, 'easeOutBounce');
+            });
+        });
+
+
+    </script>
+</body>
+
+</html>
